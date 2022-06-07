@@ -19,12 +19,6 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
 
 
-class StudentModelViewSet(viewsets.ModelViewSet):
-
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
-    # authentication_classes = [SessionAuthentication, TokenAuthentication]
-    # permission_classes = [DjangoModelPermissions]
 
 
 class StudentAPI(APIView):
@@ -70,6 +64,9 @@ class StudentAPI(APIView):
         return Response({'msg': 'Data Deleted'})
 
 
+
+```
+```py
 class StudentList(GenericAPIView, ListModelMixin):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
@@ -120,7 +117,9 @@ class LCStudentAPI(GenericAPIView, ListModelMixin, CreateModelMixin):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+```
 
+```py
 class StudentList(ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
@@ -162,7 +161,10 @@ class StudentRetrieveDestroy(RetrieveDestroyAPIView):
 
 
 
+```
 
+
+```py
 
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
@@ -173,7 +175,20 @@ router = DefaultRouter()
 router.register('studentapi', views.StudentModelViewSet,
                 basename='student')
 
- path('', include(router.urls)),
+path('', include(router.urls)),
+
+
+
+
+class StudentModelViewSet(viewsets.ModelViewSet):
+
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    # authentication_classes = [SessionAuthentication, TokenAuthentication]
+    # permission_classes = [DjangoModelPermissions]
+
+
+
 
 class StudentViewSet(viewsets.ViewSet):
     def List(self, request):
