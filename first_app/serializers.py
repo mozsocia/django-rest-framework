@@ -28,14 +28,14 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = '__all__'
 
-    def create(self, validated_data):
-        category_data = validated_data.pop('category')
-        category = Category.objects.create(**category_data)
-        book = Book.objects.create(category=category, **validated_data)
-        return book
+    # def create(self, validated_data):
+    #     category_data = validated_data.pop('category')
+    #     category = Category.objects.create(**category_data)
+    #     book = Book.objects.create(category=category, **validated_data)
+    #     return book
 
     # def create(self, validated_data):
     #     category_id = validated_data.pop('category')
     #     category = Category.objects.get(id=category_id)
-    #     book = Book.objects.create(category=category_id, **validated_data)
+    #     book = Book.objects.create(category=category, **validated_data)
     #     return book
