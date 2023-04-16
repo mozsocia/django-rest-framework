@@ -48,20 +48,20 @@ class PersonListCreateView(generics.GenericAPIView):
 class CategoryListAPIView(APIView):
 
     def get(self, request, format=None):
-        # categories = Category.objects.all().prefetch_related('book_set')
-        # serializer = CategorySerializer(categories, many=True)
-        # return Response(serializer.data)
+        categories = Category.objects.all().prefetch_related('book_set')
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
 
-        categories = Category.objects.all()
-        category_data = []
-        for category in categories:
-            category_books = Book.objects.filter(category=category)
-            category_serializer_data = CategorySerializer(category).data
+        # categories = Category.objects.all()
+        # category_data = []
+        # for category in categories:
+        #     category_books = Book.objects.filter(category=category)
+        #     category_serializer_data = CategorySerializer(category).data
 
-            category_serializer_data['books'] = BookSerializer(
-                category_books, many=True).data
-            category_data.append(category_serializer_data)
-        return Response(category_data)
+        #     category_serializer_data['books'] = BookSerializer(
+        #         category_books, many=True).data
+        #     category_data.append(category_serializer_data)
+        # return Response(category_data)
 
     def post(self, request, format=None):
         serializer = CategorySerializer(data=request.data)

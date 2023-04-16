@@ -22,7 +22,8 @@ class Category(models.Model):
 
 class Book(models.Model):
     book_title = models.CharField(max_length=100)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.book_title
