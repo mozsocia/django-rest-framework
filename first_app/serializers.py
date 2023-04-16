@@ -8,21 +8,15 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = '__all__'
-
-
 class BookSerializer(serializers.ModelSerializer):
     # category = CategorySerializer()
     category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all())
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        ret['category'] = CategorySerializer(instance.category).data
-        return ret
+    # def to_representation(self, instance):
+    #     ret = super().to_representation(instance)
+    #     ret['category'] = CategorySerializer(instance.category).data
+    #     return ret
 
     class Meta:
         model = Book
@@ -39,3 +33,16 @@ class BookSerializer(serializers.ModelSerializer):
     #     category = Category.objects.get(id=category_id)
     #     book = Book.objects.create(category=category, **validated_data)
     #     return book
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    # books = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+    # def get_books(self, obj):
+    #     books = obj.book_set.all()
+    #     serializer = BookSerializer(books, many=True)
+    #     return serializer.data
