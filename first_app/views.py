@@ -1,8 +1,6 @@
-from .serializers import CategorySerializer
 from .models import Category
-from .serializers import BookSerializer
 from .models import Book
-from .serializers import PersonSerializer
+from .serializers import *
 from .models import Person
 from rest_framework import generics
 from django.shortcuts import render
@@ -73,22 +71,22 @@ class CategoryListAPIView(APIView):
 
 class BookListCreateView(APIView):
     def get(self, request):
-        # books = Book.objects.all()
-        # serializer = BookSerializer(books, many=True)
-        # return Response(serializer.data)
-
         books = Book.objects.all()
-        book_data = []
-        for book in books:
-            book_serializer_data = BookSerializer(book).data
-            book_serializer_data['category'] = CategorySerializer(
-                book.category).data
+        serializer = BookSerializerGet(books, many=True)
+        return Response(serializer.data)
 
-            book_data.append(book_serializer_data)
-        return Response(book_data)
+        # books = Book.objects.all()
+        # book_data = []
+        # for book in books:
+        #     book_serializer_data = BookSerializerPost(book).data
+        #     book_serializer_data['category'] = CategorySerializer(
+        #         book.category).data
+
+        #     book_data.append(book_serializer_data)
+        # return Response(book_data)
 
     def post(self, request):
-        serializer = BookSerializer(data=request.data)
+        serializer = BookSerializerPost(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -8,7 +8,7 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BookSerializer(serializers.ModelSerializer):
+class BookSerializerPost(serializers.ModelSerializer):
 
     category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all())
@@ -18,9 +18,23 @@ class BookSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
 class CategorySerializer(serializers.ModelSerializer):
-    book_set = BookSerializer(many=True, read_only=True)
+    book_set = BookSerializerPost(many=True, read_only=True)
 
     class Meta:
         model = Category
         fields = '__all__'
+
+
+
+class BookSerializerGet(serializers.ModelSerializer):
+
+    category = CategorySerializer(read_only=True)
+
+    class Meta:
+        model = Book
+        fields = '__all__'
+
+
+
