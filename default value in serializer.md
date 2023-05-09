@@ -1,3 +1,4 @@
+```py
 class ChatSerializerPost(serializers.ModelSerializer):
     name = serializers.CharField(default='My Chat Room')
 
